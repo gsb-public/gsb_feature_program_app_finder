@@ -1,0 +1,6 @@
+name = GSB Feature Program App Finder
+description = The feature for creating the GSB Program Application Finder
+core = 7.x
+package = GSB
+version = 7.x-1.01
+project = gsb_feature_program_app_finder

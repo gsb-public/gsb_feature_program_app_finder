@@ -1,0 +1,32 @@
+<?php
+/**
+ * @file
+ * Code for the GSB Feature Program Application Finder feature
+ */
+
+ /**
+  * Implements hook_ctools_plugin_directory().
+  */
+function gsb_feature_program_app_finder_ctools_plugin_directory($owner, $plugin_type) {
+  if ($owner == 'ctools' && $plugin_type == 'content_types') {
+    return 'plugins/' . $plugin_type;
+  }
+}
+
+/**
+ * Implements hook_theme().
+ *
+ * Define custom theme hooks
+ */
+function gsb_feature_program_app_finder_theme($existing, $type , $theme, $path) {
+  return array(
+    'gsb_feature_program_app_finder_program_list' => array(
+      'template' => 'templates/gsb-feature-program-app-finder-program-list',
+      'file' => 'program_list.theme.inc',
+    ),
+    'gsb_feature_program_app_finder_program_instance_list' => array(
+      'template' => 'templates/gsb-feature-program-app-finder-program-instance-list',
+      'file' => 'program_instance_list.theme.inc',
+    ),
+  );
+}
