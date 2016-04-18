@@ -30,3 +30,72 @@ function gsb_feature_program_app_finder_theme($existing, $type , $theme, $path) 
     ),
   );
 }
+
+function gsb_feature_program_app_finder_forms($form_id, $args) {
+  $forms['program_app_finder'] = array(
+    'callback' => 'gsb_feature_program_app_finder_form',
+    'callback arguments' => $args,
+  );
+  return $forms;
+}
+
+function gsb_feature_program_app_finder_form($form, &$form_state) {
+
+  $program_nid = '';
+  if (!empty($_GET['program'])) {
+    $program_nid = $_GET['program'];
+  }
+  drupal_add_js(array('gsb_feature_program_app_finder' => array('program' => $program_nid)), 'setting');
+
+  $form['app-finder'] = array(
+    '#type' => 'container',
+  );
+
+  $form['app-finder']['title'] = array(
+    '#type' => 'markup',
+    '#markup' => '<h4>' . t('Ready to Apply?') . '</h4>'
+  );
+
+  $form['app-finder']['programs-text'] = array(
+    '#type' => 'markup',
+    '#markup' => '<div class="programs-text"></div>'
+  );
+
+  $form['app-finder']['programs-instance-title'] = array(
+    '#type' => 'markup',
+    '#markup' => '<div class="programs-instance-title"></div>'
+  );
+
+  $form['app-finder']['programs-instance-deadline'] = array(
+    '#type' => 'markup',
+    '#markup' => '<div class="programs-instance-deadline"></div>'
+  );
+
+  $form['app-finder']['programs'] = array(
+    '#type' => 'select',
+    '#title' => '',
+    '#options' => $form_state[0]['programs']['options'],
+    '#attributes' => array(
+      'class' => array('program-find-app-select'),
+    ),
+    '#multiple' => true,
+    '#default_value' => array()
+  );
+
+  $form['app-finder']['programs-disclaim'] = array(
+    '#type' => 'markup',
+    '#markup' => '<div class="programs-disclaim">' . t('Only programs currently accepting applications are displayed.') . '</div>'
+  );
+
+  $form['app-finder']['programs-different'] = array(
+    '#type' => 'markup',
+    '#markup' => '<div class="programs-different hide_this"><span>Or </span><a href="" class="programs-different-link">Select a Different Program</a></div>',
+  );
+
+  drupal_add_js(drupal_get_path('module', 'isotopify') . '/js/jquery.multiple.select.js');
+  drupal_add_css(drupal_get_path('module', 'isotopify') . '/css/multiple-select.css');
+  drupal_add_js(drupal_get_path('module', 'gsb_feature_program_app_finder') . '/js/gsb_feature_program_app_finder.js');
+  drupal_add_css(drupal_get_path('module', 'gsb_feature_program_app_finder') . '/css/gsb_feature_program_app_finder.css');
+
+  return $form;
+}

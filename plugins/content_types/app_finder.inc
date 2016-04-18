@@ -83,7 +83,6 @@ function gsb_feature_program_app_finder_render($subtype, $conf, $panel_args, $co
     '#attributes' => array(
       'class' => array('program-wrapper'),
     ),
-    //'content' => array('#markup' => '<p>program</p>')
     'content' => array('#markup' => theme('gsb_feature_program_app_finder_program_list', $programs))
   );
 
@@ -92,11 +91,36 @@ function gsb_feature_program_app_finder_render($subtype, $conf, $panel_args, $co
     '#attributes' => array(
       'class' => array('program-instance-wrapper'),
     ),
-    //'content' => array('#markup' => '<p>program instance</p>')
     'content' => array('#markup' => theme('gsb_feature_program_app_finder_program_instance_list', $program_instances))
   );
 
+  $program_options = array();
+  foreach($programs as $key => $program) {
+    $program_options[$key] = str_replace("\xE2\x80\x8B", "", $program->title);
+  }
+
+  asort($program_options);
+
+  $states = array(
+    'programs' => array(
+      'options' => $program_options
+    )
+  );
+
+  $form_state = array('method' => 'get', $states, 'redirect' => FALSE);
+  $form = drupal_build_form('program_app_finder', $form_state);
+  unset($form['form_build_id']);
+  $app_finder_form = drupal_render($form);
+
+  $form_wrapper = array(
+    '#type' => 'container',
+    '#attributes' => array(
+      'class' => array('app-finder-form-wrapper'),
+    ),
+    'content' => array('#markup' => $app_finder_form)
+  );
+
   return (object) array(
-    'content' => array($program_wrapper, $program_instance_wrapper),
+    'content' => array($form_wrapper, $program_wrapper, $program_instance_wrapper),
   );
 }

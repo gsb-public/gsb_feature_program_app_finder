@@ -34,6 +34,11 @@ function gsb_feature_program_app_finder_preprocess_gsb_feature_program_app_finde
       $application_deadline_date = new DateTime($last_deadline->field_date['und'][0]['value']);
       $application_deadline_date = $application_deadline_date->format('d M Y');
       $application_deadline_text = !empty($last_deadline->field_deadline_text['und'][0]['value']) ? $last_deadline->field_deadline_text['und'][0]['value'] : '';
+      $application_deadline_full_text = $application_deadline_date;
+      if ($application_deadline_text != '') {
+        $application_deadline_full_text = $application_deadline_text . ' | ' . $application_deadline_date;
+      }
+      $application_deadline_full_text = t('Final Deadline: ') . $application_deadline_full_text;
     }
     $markup =
       '<span ' .
@@ -41,6 +46,7 @@ function gsb_feature_program_app_finder_preprocess_gsb_feature_program_app_finde
         'data-program-instance-target-id="' . $target_id . '"' .
         'data-program-instance-full-title="' . $instance_full_title . '"' .
         'data-program-instance-apower-id="' . $apower_id . '"' .
+        'data-program-instance-deadline="' . $application_deadline_full_text . '"' .
       '></span>';
     $pi_list['program-'. $pi_nid] = $markup;
   }
