@@ -78,14 +78,6 @@ function gsb_feature_program_app_finder_render($subtype, $conf, $panel_args, $co
     }
   }
 
-  $program_wrapper = array(
-    '#type' => 'container',
-    '#attributes' => array(
-      'class' => array('program-wrapper'),
-    ),
-    'content' => array('#markup' => theme('gsb_feature_program_app_finder_program_list', $programs))
-  );
-
   $program_instance_wrapper = array(
     '#type' => 'container',
     '#attributes' => array(
@@ -96,7 +88,9 @@ function gsb_feature_program_app_finder_render($subtype, $conf, $panel_args, $co
 
   $program_options = array();
   foreach($programs as $key => $program) {
-    $program_options[$key] = str_replace("\xE2\x80\x8B", "", $program->title);
+    if (!empty($program_instances[$key])) {
+      $program_options[$key] = str_replace("\xE2\x80\x8B", "", $program->title);
+    }
   }
 
   asort($program_options);
@@ -121,6 +115,6 @@ function gsb_feature_program_app_finder_render($subtype, $conf, $panel_args, $co
   );
 
   return (object) array(
-    'content' => array($form_wrapper, $program_wrapper, $program_instance_wrapper),
+    'content' => array($form_wrapper, $program_instance_wrapper),
   );
 }
