@@ -57,7 +57,7 @@
           $('.programs-instance-application-url-wrapper').show();
         }
         else {
-          $('.programs-instance-application-url-wrapper').show();
+          $('.programs-instance-application-url-wrapper').hide();
         }
         if (sample_app_form_url) {
           $('.programs-instance-sample-app-form-url').attr('href', sample_app_form_url);
