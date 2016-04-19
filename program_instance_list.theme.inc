@@ -2,6 +2,7 @@
 
 function gsb_feature_program_app_finder_preprocess_gsb_feature_program_app_finder_program_instance_list(&$vars) {
   global $base_url;
+  $apower_base_application_url = variable_get('apower_base_application_url', '');
   $program_instances = array();
   foreach($vars as $key => $program_instance) {
     if (is_numeric($key)) {
@@ -37,6 +38,9 @@ function gsb_feature_program_app_finder_preprocess_gsb_feature_program_app_finde
     $application_url = $instance_wrapper->field_application_url->value();
     if ($application_url) {
       $application_url = $application_url['url'];
+    }
+    else if ($apower_id) {
+      $application_url = $apower_base_application_url . $apower_id;
     }
     $application_deadline_date = null;
     $application_deadline_text = '';
