@@ -17,6 +17,8 @@
         $('div.programs-different').hide();
         $('.programs-instance-title').hide();
         $('.programs-instance-deadline').hide();
+        $('.programs-instance-application-url-wrapper').hide();
+        $('.programs-instance-sample-app-form-url-wrapper').hide();
         $('.programs-disclaim').show();
       });
 
@@ -43,11 +45,27 @@
       var target_id = $(this).attr('data-program-instance-target-id');
       if (selected_program_nid == target_id) {
         var instance_title = $(this).attr('data-program-instance-full-title');
+        var application_url = $(this).attr('data-program-instance-application-url');
+        var sample_app_form_url = $(this).attr('data-program-instance-sample-app-form-url');
         $('.programs-instance-title').text(instance_title);
         $('.programs-instance-title').show();
         var instance_deadline = $(this).attr('data-program-instance-deadline');
         $('.programs-instance-deadline').text(instance_deadline);
         $('.programs-instance-deadline').show();
+        if (application_url) {
+          $('.programs-instance-application-url').attr('href', application_url);
+          $('.programs-instance-application-url-wrapper').show();
+        }
+        else {
+          $('.programs-instance-application-url-wrapper').show();
+        }
+        if (sample_app_form_url) {
+          $('.programs-instance-sample-app-form-url').attr('href', sample_app_form_url);
+          $('.programs-instance-sample-app-form-url-wrapper').show();
+        }
+        else {
+          $('.programs-instance-sample-app-form-url-wrapper').hide();
+        }
       }
     });
     $('.programs-text').text($('select.program-find-app-select option:selected').text());

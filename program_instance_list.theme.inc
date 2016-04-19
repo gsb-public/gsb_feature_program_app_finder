@@ -1,6 +1,7 @@
 <?php
 
 function gsb_feature_program_app_finder_preprocess_gsb_feature_program_app_finder_program_instance_list(&$vars) {
+  global $base_url;
   $program_instances = array();
   foreach($vars as $key => $program_instance) {
     if (is_numeric($key)) {
@@ -25,8 +26,18 @@ function gsb_feature_program_app_finder_preprocess_gsb_feature_program_app_finde
     }
     $program = $instance_wrapper->field_program->value();
     $target_id = $program->nid;
+    $program_wrapper = entity_metadata_wrapper('node', $target_id);
+    $sample_app_form_url = $program_wrapper->field_sample_application_file->value();
+    if ($sample_app_form_url && !empty($sample_app_form_url['uri'])) {
+      $sample_app_form_url = $sample_app_form_url['uri'];
+      $sample_app_form_url = str_replace('public://', $base_url . '/sites/gsb/files/', $sample_app_form_url);
+    }
     $apower_id = $instance_wrapper->field_apower_id->value();
     $application_deadlines = $instance_wrapper->field_application_deadlines->value();
+    $application_url = $instance_wrapper->field_application_url->value();
+    if ($application_url) {
+      $application_url = $application_url['url'];
+    }
     $application_deadline_date = null;
     $application_deadline_text = '';
     if (count($application_deadlines) > 0) {
@@ -47,6 +58,8 @@ function gsb_feature_program_app_finder_preprocess_gsb_feature_program_app_finde
         'data-program-instance-full-title="' . $instance_full_title . '"' .
         'data-program-instance-apower-id="' . $apower_id . '"' .
         'data-program-instance-deadline="' . $application_deadline_full_text . '"' .
+        'data-program-instance-sample-app-form-url="' . $sample_app_form_url . '"' .
+        'data-program-instance-application-url="' . $application_url . '"' .
       '></span>';
     $pi_list['program-'. $pi_nid] = $markup;
   }
