@@ -56,6 +56,11 @@ function gsb_feature_program_app_finder_form($form, &$form_state) {
     '#markup' => '<h4>' . t('Ready to Apply?') . '</h4>'
   );
 
+  $form['app-finder']['programs-instructions'] = array(
+    '#type' => 'markup',
+    '#markup' => '<div class="programs-instructions">' . t('Begin an application or sign in to continue a saved one.') . '</div>'
+  );
+
   $form['app-finder']['programs-text'] = array(
     '#type' => 'markup',
     '#markup' => '<div class="programs-text"></div>'

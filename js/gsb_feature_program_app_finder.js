@@ -25,6 +25,7 @@
         $('.programs-text').text('');
         $('select.program-find-app-select').multipleSelect('setSelects', []);
         $('.ms-parent.program-find-app-select').show();
+        $('.programs-instructions').show();
         $('div.programs-different').hide();
         $('.programs-instance-title').hide();
         $('.programs-instance-deadline').hide();
@@ -118,6 +119,7 @@
     var application_url = item.attr('data-program-instance-application-url');
     var sample_app_form_url = item.attr('data-program-instance-sample-app-form-url');
     var instance_deadline = item.attr('data-program-instance-deadline');
+    $('.programs-instructions').hide();
     $('.programs-instance-title').text(instance_title);
     $('.programs-instance-title').show();
     $('.programs-instance-deadline').text(instance_deadline);
