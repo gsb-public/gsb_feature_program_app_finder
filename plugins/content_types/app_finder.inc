@@ -74,8 +74,9 @@ function gsb_feature_program_app_finder_render($subtype, $conf, $panel_args, $co
   $program_instances = array();
   foreach($results as $instance) {
     if (empty($program_instances[$instance->field_program_target_id])) {
-      $program_instances[$instance->field_program_target_id] = $instance->nid;
+      $program_instances[$instance->field_program_target_id] = array();
     }
+    $program_instances[$instance->field_program_target_id][] = $instance->nid;
   }
 
   $program_instance_wrapper = array(

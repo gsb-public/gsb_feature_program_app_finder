@@ -4,9 +4,11 @@ function gsb_feature_program_app_finder_preprocess_gsb_feature_program_app_finde
   global $base_url;
   $apower_base_application_url = variable_get('apower_base_application_url', '');
   $program_instances = array();
-  foreach($vars as $key => $program_instance) {
+  foreach($vars as $key => $pi_array) {
     if (is_numeric($key)) {
-      $program_instances[$key] = $program_instance;
+      foreach($pi_array as $pi_nid) {
+        $program_instances[] = $pi_nid;
+      }
     }
   }
   $pi_list = array();
