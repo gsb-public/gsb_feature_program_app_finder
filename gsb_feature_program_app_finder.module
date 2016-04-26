@@ -89,12 +89,12 @@ function gsb_feature_program_app_finder_form($form, &$form_state) {
 
   $form['app-finder']['programs-instance-sample-app-form-url'] = array(
     '#type' => 'markup',
-    '#markup' => '<div class="programs-instance-sample-app-form-url-wrapper hide_this"><a href="" class="programs-instance-sample-app-form-url" target="_blank">Sample Application</a></div>'
+    '#markup' => '<span class="programs-instance-sample-app-form-url-wrapper hide_this"><a href="" class="programs-instance-sample-app-form-url" target="_blank">Sample Application</a></span>'
   );
 
   $form['app-finder']['programs-instance-application-url'] = array(
     '#type' => 'markup',
-    '#markup' => '<div class="programs-instance-application-url-wrapper hide_this"><a href="" class="programs-instance-application-url">Apply Online</a></div>'
+    '#markup' => '<span class="programs-instance-application-url-wrapper hide_this"><a href="" class="programs-instance-application-url">Apply Online</a></span>'
   );
 
   $form['app-finder']['programs'] = array(
