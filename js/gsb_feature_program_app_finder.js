@@ -60,6 +60,10 @@
    */
   Drupal.gsb_feature_program_app_finder.instanceSelected = function() {
     var selected_instance_nid = $('select.programs-instance-date-select option:selected').val();
+    $('select.programs-instance-date-select > option').each(function() {
+      $(this).removeAttr('selected');
+    });
+    $('select.programs-instance-date-select option[value="' + selected_instance_nid + '"]').attr('selected', 'selected');
     $('.program-instance-list li span').each(function() {
       var instance_nid = $(this).attr('data-program-instance-nid');
       // Get the detail info for the selected program instance
@@ -91,12 +95,20 @@
       }
     });
     $('select.programs-instance-date-select').children().remove();
+    if (instance_titles.length) {
+      $('select.programs-instance-date-select').append($("<option/>", {
+        value: '1',
+        text: 'Select Program Dates',
+        selected: 'selected'
+      }));
+    }
     for (var index = 0; index < instance_titles.length; index++) {
       $('select.programs-instance-date-select').append($("<option/>", {
         value: instance_titles[index].key,
-        text: instance_titles[index].text
+        text: instance_titles[index].text,
       }));
     }
+    $('select.programs-instance-date-select').val('1');
     if (instance_match_count > 1) {
       $('div.form-item-programs-instance-date-select').show();
       $('.programs-instance-title').hide();
