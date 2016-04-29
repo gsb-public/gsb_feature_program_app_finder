@@ -83,7 +83,6 @@ function gsb_feature_program_app_finder_form($form, &$form_state) {
     '#attributes' => array(
       'class' => array('programs-instance-date-select'),
     ),
-    '#multiple' => true,
     '#default_value' => array()
   );
 
