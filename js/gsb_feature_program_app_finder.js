@@ -39,7 +39,8 @@
       $('select.program-find-app-select').each(function () {
         var $select = $(this);
         $select.multipleSelect({
-          single: true
+          single: true,
+          placeholder : 'Select a Program'
         });
         if (settings.gsb_feature_program_app_finder.program != '') {
           var p_nid = settings.gsb_feature_program_app_finder.program;
