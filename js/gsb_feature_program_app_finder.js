@@ -101,6 +101,10 @@
         text: 'Select Program Dates',
         selected: 'selected'
       }));
+      var customSelect = $.find('span.customSelectInner');
+      if (customSelect != undefined) {
+        $(customSelect).text('Something or other');
+      }
     }
     for (var index = 0; index < instance_titles.length; index++) {
       $('select.programs-instance-date-select').append($("<option/>", {
