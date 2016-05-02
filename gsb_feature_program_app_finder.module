@@ -4,6 +4,8 @@
  * Code for the GSB Feature Program Application Finder feature
  */
 
+include_once 'plugins/content_types/app_finder.inc';
+
  /**
   * Implements hook_ctools_plugin_directory().
   */
@@ -11,6 +13,35 @@ function gsb_feature_program_app_finder_ctools_plugin_directory($owner, $plugin_
   if ($owner == 'ctools' && $plugin_type == 'content_types') {
     return 'plugins/' . $plugin_type;
   }
+}
+
+/**
+ * Implementation of hook_block_info()
+ *
+ */
+function gsb_feature_program_app_finder_block_info() {
+  return array(
+    'program_app_finder' => array(
+      'info' => t('Program App Finder'),
+      'cache' => DRUPAL_CACHE_GLOBAL,
+    )
+  );
+}
+
+/**
+ * Implementation of hook_block_view
+ *
+ * Define callbacks for block display
+ *
+ */
+function gsb_feature_program_app_finder_block_view($delta = '') {
+  $block = array();
+  switch ($delta) {
+    case 'program_app_finder':
+      $block['content'] = gsb_feature_program_app_finder_program_app_finder();
+      break;
+  }
+  return $block;
 }
 
 /**
@@ -83,7 +114,6 @@ function gsb_feature_program_app_finder_form($form, &$form_state) {
     '#attributes' => array(
       'class' => array('programs-instance-date-select'),
     ),
-    '#multiple' => true,
     '#default_value' => array()
   );
 
@@ -124,4 +154,9 @@ function gsb_feature_program_app_finder_form($form, &$form_state) {
   drupal_add_css(drupal_get_path('module', 'gsb_feature_program_app_finder') . '/css/gsb_feature_program_app_finder.css');
 
   return $form;
+}
+
+function gsb_feature_program_app_finder_program_app_finder() {
+  $finder_content = gsb_feature_program_app_finder_render(null, null, null);
+  return $finder_content->content;
 }
