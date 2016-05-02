@@ -103,7 +103,7 @@
       }));
       var customSelect = $.find('span.customSelectInner');
       if (customSelect != undefined) {
-        $(customSelect).text('Something or other');
+        $(customSelect).text('Select Program Dates');
       }
     }
     for (var index = 0; index < instance_titles.length; index++) {
