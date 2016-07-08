@@ -49,6 +49,7 @@
         }
       });
 
+      Drupal.gsb_feature_program_app_finder.programSelected();
     }
   };
 
@@ -80,6 +81,9 @@
   Drupal.gsb_feature_program_app_finder.programSelected = function() {
     var instance_match_count = 0;
     var instance_titles = [];
+    if ($('select.program-find-app-select option:selected').length == 0) {
+      return;
+    }
     var selected_program_nid = $('select.program-find-app-select option:selected').val();
     $('.program-instance-list li span').each(function() {
       var target_id = $(this).attr('data-program-instance-target-id');
