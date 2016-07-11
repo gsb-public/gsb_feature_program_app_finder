@@ -50,6 +50,7 @@
       });
 
       Drupal.gsb_feature_program_app_finder.programSelected();
+      Drupal.gsb_feature_program_app_finder.instanceSelected();
     }
   };
 
@@ -60,7 +61,17 @@
    *   - Updates the details for the selected program instance
    */
   Drupal.gsb_feature_program_app_finder.instanceSelected = function() {
+    var selected_program_nid = $('select.program-find-app-select option:selected').val();
     var selected_instance_nid = $('select.programs-instance-date-select option:selected').val();
+    if (selected_instance_nid == '1') {
+      if (selected_program_nid == localStorage.getItem('selected-program-id')) {
+        selected_instance_nid = localStorage.getItem('selected-instance-id');
+      }
+    }
+    // store the program and program instance ids in localStorage in case the user
+    // returns to this page using the browser back button
+    localStorage.setItem('selected-program-id', selected_program_nid);
+    localStorage.setItem('selected-instance-id', selected_instance_nid);
     $('select.programs-instance-date-select > option').each(function() {
       $(this).removeAttr('selected');
     });
