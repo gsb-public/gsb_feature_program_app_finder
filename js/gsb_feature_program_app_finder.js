@@ -22,6 +22,7 @@
         event.preventDefault();
         event.stopPropagation();
         // reset the detail values
+
         $('.programs-text').text('');
         $('select.program-find-app-select').multipleSelect('setSelects', []);
         $('.ms-parent.program-find-app-select').show();
@@ -42,6 +43,8 @@
           single: true,
           placeholder : 'Select a Program'
         });
+        $(".program-find-app-select input[type='radio']").hide();
+        $(".ms-drop").prepend('<div class="header-text">Scroll Down to View All Programs</div>');
         if (settings.gsb_feature_program_app_finder.program != '') {
           var p_nid = settings.gsb_feature_program_app_finder.program;
           $select.val(p_nid);
