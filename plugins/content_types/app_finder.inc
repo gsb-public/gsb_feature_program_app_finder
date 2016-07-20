@@ -63,6 +63,8 @@ function gsb_feature_program_app_finder_render($subtype, $conf, $panel_args, $co
   $query->join('field_data_field_instance_date', 'fid', "n.nid = fid.entity_id AND fid.entity_type = 'node' AND fid.deleted = '0'");
   $query->fields('fid', array('field_instance_date_value'));
   $query->leftJoin('field_data_field_display_on_finder', 'df', 'n.nid = df.entity_id AND df.deleted = 0');
+  $query->join('field_data_field_is_application_open', 'ao', "n.nid = ao.entity_id AND ao.entity_type = 'node' AND ao.deleted = '0'");
+  $query->fields('ao', array('field_is_application_open_value'));
   $query->condition('nodefp.nid', $program_nids, 'IN');
   $query->condition('n.status', '1');
   $query->condition('n.type', 'program_instance');
@@ -73,10 +75,12 @@ function gsb_feature_program_app_finder_render($subtype, $conf, $panel_args, $co
 
   $program_instances = array();
   foreach($results as $instance) {
-    if (empty($program_instances[$instance->field_program_target_id])) {
-      $program_instances[$instance->field_program_target_id] = array();
+    if ($instance->field_is_application_open_value == 1) {
+      if (empty($program_instances[$instance->field_program_target_id])) {
+        $program_instances[$instance->field_program_target_id] = array();
+      }
+      $program_instances[$instance->field_program_target_id][] = $instance->nid;
     }
-    $program_instances[$instance->field_program_target_id][] = $instance->nid;
   }
 
   $program_instance_wrapper = array(
