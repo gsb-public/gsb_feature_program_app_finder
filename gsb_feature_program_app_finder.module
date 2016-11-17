@@ -119,12 +119,12 @@ function gsb_feature_program_app_finder_form($form, &$form_state) {
 
   $form['app-finder']['programs-instance-sample-app-form-url'] = array(
     '#type' => 'markup',
-    '#markup' => '<span class="programs-instance-sample-app-form-url-wrapper hide_this"><a href="" class="programs-instance-sample-app-form-url" target="_blank">Sample Application</a></span>'
+    '#markup' => '<span class="programs-instance-sample-app-form-url-wrapper hide_this"><a href="/" class="programs-instance-sample-app-form-url" target="_blank">Sample Application</a></span>'
   );
 
   $form['app-finder']['programs-instance-application-url'] = array(
     '#type' => 'markup',
-    '#markup' => '<span class="programs-instance-application-url-wrapper hide_this"><a href="" class="programs-instance-application-url">Apply Online</a></span>'
+    '#markup' => '<span class="programs-instance-application-url-wrapper hide_this"><a href="/" class="programs-instance-application-url">Apply Online</a></span>'
   );
 
   $form['app-finder']['programs'] = array(
@@ -145,7 +145,7 @@ function gsb_feature_program_app_finder_form($form, &$form_state) {
 
   $form['app-finder']['programs-different'] = array(
     '#type' => 'markup',
-    '#markup' => '<div class="programs-different hide_this"><span>Or </span><a href="" class="programs-different-link">Select a Different Program</a></div>',
+    '#markup' => '<div class="programs-different hide_this"><span>Or </span><a href="/" class="programs-different-link">Select a Different Program</a></div>',
   );
 
   drupal_add_js(drupal_get_path('module', 'isotopify') . '/js/jquery.multiple.select.js');
