@@ -62,20 +62,22 @@ function gsb_feature_program_app_finder_render($subtype, $conf, $panel_args, $co
   $query->fields('nodefp', array('nid'));
   $query->join('field_data_field_instance_date', 'fid', "n.nid = fid.entity_id AND fid.entity_type = 'node' AND fid.deleted = '0'");
   $query->fields('fid', array('field_instance_date_value'));
-  $query->leftJoin('field_data_field_display_on_finder', 'df', 'n.nid = df.entity_id AND df.deleted = 0');
-  $query->join('field_data_field_is_application_open', 'ao', "n.nid = ao.entity_id AND ao.entity_type = 'node' AND ao.deleted = '0'");
-  $query->fields('ao', array('field_is_application_open_value'));
+  // Application State
+  $query->join('field_data_field_application_state', 'das', "n.nid = das.entity_id AND das.entity_type = 'node' AND das.deleted = '0'");
+  $query->addField('das', 'field_application_state_value', 'application_state');
   $query->condition('nodefp.nid', $program_nids, 'IN');
   $query->condition('n.status', '1');
   $query->condition('n.type', 'program_instance');
   $query->condition('fid.field_instance_date_value', $today, '>=');
-  $query->condition('df.field_display_on_finder_value', 1);
+  //$query->condition('df.field_display_on_finder_value', 1);
+  $query->condition('das.field_application_state_value', array('2', '1'), 'IN');
+  $query->orderBy('das.field_application_state_value', 'ASC');
   $query->orderBy('fid.field_instance_date_value', 'ASC');
   $results = $query->execute();
 
   $program_instances = array();
   foreach($results as $instance) {
-    if ($instance->field_is_application_open_value == 1) {
+    if ($instance->application_state == "1" || $instance->application_state == "2") {
       if (empty($program_instances[$instance->field_program_target_id])) {
         $program_instances[$instance->field_program_target_id] = array();
       }
