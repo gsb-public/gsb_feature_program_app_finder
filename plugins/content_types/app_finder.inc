@@ -71,7 +71,6 @@ function gsb_feature_program_app_finder_render($subtype, $conf, $panel_args, $co
   $query->condition('fid.field_instance_date_value', $today, '>=');
   //$query->condition('df.field_display_on_finder_value', 1);
   $query->condition('das.field_application_state_value', array('2', '1'), 'IN');
-  $query->orderBy('das.field_application_state_value', 'ASC');
   $query->orderBy('fid.field_instance_date_value', 'ASC');
   $results = $query->execute();
 
