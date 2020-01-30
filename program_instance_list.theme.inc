@@ -44,23 +44,43 @@ function gsb_feature_program_app_finder_preprocess_gsb_feature_program_app_finde
     else if ($apower_id) {
       $application_url = $apower_base_application_url . $apower_id;
     }
+
+    // Application deadlines for program
     $application_deadline_date = null;
     $application_deadline_text = '';
     if (count($application_deadlines) > 0) {
-      $last_deadline = array_pop($application_deadlines);
-      if (!empty($last_deadline->field_date)) {
-        $application_deadline_date = new DateTime($last_deadline->field_date['und'][0]['value']);
-        $application_deadline_date = $application_deadline_date->format('d M Y');
+      if (count($application_deadlines) == 1) {
+        $last_deadline = array_pop($application_deadlines);
+        if (!empty($last_deadline->field_date)) {
+          $application_deadline_date = new DateTime($last_deadline->field_date['und'][0]['value']);
+          $application_deadline_date = $application_deadline_date->format('d M Y');
+        }
+        $application_deadline_text = !empty($last_deadline->field_deadline_text['und'][0]['value']) ? $last_deadline->field_deadline_text['und'][0]['value'] : '';
+        $application_deadline_full_text = $application_deadline_date;
+        if ($application_deadline_text != '') {
+          $application_deadline_full_text = $application_deadline_text;
+          if ($application_deadline_date) {
+            $application_deadline_full_text .= ' | ' . $application_deadline_date;
+          }
+        }
+        $application_deadline_full_text = t('Deadline ^') . $application_deadline_full_text;
       }
-      $application_deadline_text = !empty($last_deadline->field_deadline_text['und'][0]['value']) ? $last_deadline->field_deadline_text['und'][0]['value'] : '';
-      $application_deadline_full_text = $application_deadline_date;
-      if ($application_deadline_text != '') {
-        $application_deadline_full_text = $application_deadline_text;
-        if ($application_deadline_date) {
-          $application_deadline_full_text .= ' | ' . $application_deadline_date;
+      else {
+        $application_deadlines = array_reverse($application_deadlines);
+        $application_deadline_full_text = t('Deadlines');
+        foreach ($application_deadlines as $key => $application_deadline) {
+          if (!empty($application_deadline->field_date)) {
+            $application_deadline_date = new DateTime($application_deadline->field_date['und'][0]['value']);
+            $application_deadline_date = $application_deadline_date->format('d M Y');
+          }
+          $application_deadline_text = !empty($application_deadline->field_deadline_text['und'][0]['value']) ? 
+                            $application_deadline->field_deadline_text['und'][0]['value'] : '';
+          $application_deadline_full_text .= '^'. $application_deadline_text;
+          if ($application_deadline_date) {
+            $application_deadline_full_text .= ' | ' . $application_deadline_date;
+          }
         }
       }
-      $application_deadline_full_text = t('Final Deadline: ') . $application_deadline_full_text;
     }
     $markup =
       '<span ' .

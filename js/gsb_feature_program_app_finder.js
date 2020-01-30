@@ -154,10 +154,11 @@
     var application_url = item.attr('data-program-instance-application-url');
     var sample_app_form_url = item.attr('data-program-instance-sample-app-form-url');
     var instance_deadline = item.attr('data-program-instance-deadline');
+    instance_deadline = replaceAll(instance_deadline, '^', '<br />');
     $('.programs-instructions').hide();
     $('.programs-instance-title').text(instance_title);
     $('.programs-instance-title').show();
-    $('.programs-instance-deadline').text(instance_deadline);
+    $('.programs-instance-deadline').html(instance_deadline);
     $('.programs-instance-deadline').show();
     if (application_url) {
       $('.programs-instance-application-url').attr('href', application_url);
@@ -173,6 +174,12 @@
     else {
       $('.programs-instance-sample-app-form-url-wrapper').hide();
     }
+  }
+
+  /* Define functin to find and replace specified term with replacement string */
+  function replaceAll(str, term, replacement) {
+    term = term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    return str.replace(new RegExp(term, 'g'), replacement);
   }
 
 })(jQuery);
