@@ -161,6 +161,9 @@
     $('.programs-instance-deadline').html(instance_deadline);
     $('.programs-instance-deadline').show();
     if (application_url) {
+      var urlParams = new URLSearchParams(window.location.search);
+      var reprogram = new RegExp("program=\\d+");      
+      application_url = application_url + urlParams.toString().replace(reprogram, '');
       $('.programs-instance-application-url').attr('href', application_url);
       $('.programs-instance-application-url-wrapper').show();
     }
