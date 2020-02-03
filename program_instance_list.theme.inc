@@ -63,11 +63,11 @@ function gsb_feature_program_app_finder_preprocess_gsb_feature_program_app_finde
             $application_deadline_full_text .= ' | ' . $application_deadline_date;
           }
         }
-        $application_deadline_full_text = t('Deadline ^') . $application_deadline_full_text;
+        $application_deadline_full_text = t('<b>Deadline</b> ^') . $application_deadline_full_text;
       }
       else {
         $application_deadlines = array_reverse($application_deadlines);
-        $application_deadline_full_text = t('Deadlines');
+        $application_deadline_full_text = t('<b>Deadlines</b>');
         foreach ($application_deadlines as $key => $application_deadline) {
           if (!empty($application_deadline->field_date)) {
             $application_deadline_date = new DateTime($application_deadline->field_date['und'][0]['value']);
