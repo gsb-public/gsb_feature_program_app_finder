@@ -63,23 +63,31 @@ function gsb_feature_program_app_finder_preprocess_gsb_feature_program_app_finde
             $application_deadline_full_text .= ' | ' . $application_deadline_date;
           }
         }
-        $application_deadline_full_text = t('<b>Deadline</b> ^') . $application_deadline_full_text;
+        $application_deadline_full_text = t('<b>Deadline</b>^') . $application_deadline_full_text;
       }
       else {
-        $application_deadlines = array_reverse($application_deadlines);
-        $application_deadline_full_text = t('<b>Deadlines</b>');
+        $application_deadlines_sorted = array();
+        $application_deadline_full_text = t('<b>Deadlines</b>^');
         foreach ($application_deadlines as $key => $application_deadline) {
+          $value = $application_deadline->field_deadline_text['und'][0]['value'];
+          $application_deadline_date = null;
           if (!empty($application_deadline->field_date)) {
             $application_deadline_date = new DateTime($application_deadline->field_date['und'][0]['value']);
             $application_deadline_date = $application_deadline_date->format('d M Y');
           }
-          $application_deadline_text = !empty($application_deadline->field_deadline_text['und'][0]['value']) ? 
-                            $application_deadline->field_deadline_text['und'][0]['value'] : '';
-          $application_deadline_full_text .= '^'. $application_deadline_text;
-          if ($application_deadline_date) {
-            $application_deadline_full_text .= ' | ' . $application_deadline_date;
-          }
+          $application_deadlines_sorted[$value] = $application_deadline_date;
         }
+        ksort($application_deadlines_sorted);
+        $application_deadline_full_text .= implode('^ ', array_map(
+          function ($v, $k) {
+            $separator = '';
+            if (!empty($v) && !empty($k))
+              $separator = ' | ';
+            return sprintf("%s %s %s", $k, $separator, $v);
+          },
+          $application_deadlines_sorted,
+          array_keys($application_deadlines_sorted)
+      ));
       }
     }
     $markup =
